@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Medicine Upload</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h2>Smart Medicine Upload</h2>
+<p>Enter prescription details below and send to Arduino Mega.</p>
+
+<form id="medicineForm">
+  <label>Patient Name:</label><br>
+  <input type="text" id="patient" placeholder="Gangotri" required><br><br>
+
+  <label>Medicine Name:</label><br>
+  <input type="text" id="medicine" placeholder="PCM650" required><br><br>
+
+  <label>Time Slot:</label><br>
+  <select id="time">
+    <option value="M">Morning</option>
+    <option value="A">Afternoon</option>
+    <option value="N">Night</option>
+  </select><br><br>
+
+  <button type="button" onclick="sendToArduino()">Send to Arduino</button>
+</form>
+
+<p id="status"></p>
+
+<script>
+function sendToArduino() {
+  const patient = document.getElementById('patient').value;
+  const medicine = document.getElementById('medicine').value;
+  const time = document.getElementById('time').value;
+
+  const data = patient + "," + medicine + "," + time;
+
+  document.getElementById('status').innerText = 
+    "Send this text to Arduino Mega via USB Serial or Bluetooth:\n" + data;
+
+  navigator.clipboard.writeText(data).then(() => {
+    console.log("Data copied to clipboard");
+  });
+}
+</script>
+
+</body>
+</html>
